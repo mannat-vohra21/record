@@ -33,4 +33,17 @@ public final class HashUtil {
             throw new IllegalStateException(ALGORITHM + " not available", e);
         }
     }
+
+    /**
+     * @return the raw 32-byte SHA-256 digest of {@code input}. Used by the Merkle tree, which must
+     *         hash raw bytes (prefix byte + child digests), not hex text.
+     */
+    public static byte[] sha256(byte[] input) {
+        Objects.requireNonNull(input, "input must not be null");
+        try {
+            return MessageDigest.getInstance(ALGORITHM).digest(input);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(ALGORITHM + " not available", e);
+        }
+    }
 }
